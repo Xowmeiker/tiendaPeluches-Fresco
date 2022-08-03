@@ -4,14 +4,7 @@ import { StyledContainer } from "../ItemListContainer/ItemListContainer";
 
 export default function ItemCount({stock,initial,onAdd}) {
   const [value,setValue] = useState(0)
-  const [disabled,setDisabled] = useState(false)
-
-  function updateButtons(val){
-    setValue(val)
-    if(value=0){
-      setDisabled(true)
-    }
-  }
+  const [disabled,setDisabled] = useState(true)
 
   return (
     <>
@@ -20,9 +13,16 @@ export default function ItemCount({stock,initial,onAdd}) {
           value={value}
           max={stock}
           min={0}
-          onChange={val=>updateButtons(val)}
+          onChange={val=>{
+            console.log(val)
+            setValue(val)
+            if(val == 0)
+            setDisabled(true)
+            else
+            setDisabled(false)
+          }}
           defaultValue={initial}
-          placeholder="1"
+          placeholder={0}
           label="Cantidad:"
           variant="filled"
           size="md"
