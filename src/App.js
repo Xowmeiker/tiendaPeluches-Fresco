@@ -1,11 +1,13 @@
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 import NavBar from './components/NavBar/NavBar'
 import { MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 
 function App() {
 
   return (
     <>
+    <NotificationsProvider>
     <MantineProvider
     theme={{
       colors: {
@@ -17,6 +19,7 @@ function App() {
       <NavBar/>
       <ItemListContainer greeting="Bienvenido a la tienda" iconsSize={14}/>
       </MantineProvider>
+      </NotificationsProvider>
     </>
   );
 }
