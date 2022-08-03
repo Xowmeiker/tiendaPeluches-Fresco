@@ -1,55 +1,40 @@
 import { CartWidget } from "../CartWidget/CartWidget";
 import styled from 'styled-components';
-import { Button } from '@mantine/core';
+
 
 
 function NavBar() {
     
     return (
         <Wrapper>
-            <Menu>
-                <StyledList>
-                <StyledButton color="dark" radius="xs" size="md">
-                Animales
-                </StyledButton>
-                <StyledButton color="dark" radius="xs" size="md">
-                Personajes
-                </StyledButton>
-                <StyledButton color="dark" radius="xs" size="md">
-                Almohadas
-                </StyledButton>
-                </StyledList>
-            </Menu>
-            <BrandName>Stuffed</BrandName>
-            <CartWidget></CartWidget>
-        </Wrapper>
+            <HeaderElement>
+                <BrandName>Stuffed</BrandName>
+            </HeaderElement>
+            <HeaderElement>
+                <CartWidget size = {45}/>
+            </HeaderElement>
+        </Wrapper> 
     );
 }
 
+const background = "#B400FF";
 
 const Wrapper = styled.header`
-    color: indigo;
+    color: black;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: darkgray;
+    background-color:white;
+    border-bottom: 4px solid ${background};
+`
+
+const HeaderElement = styled.div`
+    padding: 0% 10%;
 `
 
 const BrandName = styled.h1`
-
-`
-
-const Menu = styled.nav`
-
-`
-
-const StyledList = styled.ul`
-text-decoration: none;
-list-style-type: none;
-`
-
-const StyledButton = styled(Button)`
-    margin: 5px;
+ color: black;
+ font-size: 4vw;
 `
 
 export default NavBar;
