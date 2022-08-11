@@ -4,7 +4,6 @@ import { RiEmotionSadFill, RiGameLine } from "react-icons/ri";
 import { GiPillow } from "react-icons/gi";
 import styled from "styled-components";
 import { useState } from "react";
-import ItemSaleCard from "../ItemSaleCard/ItemSaleCard";
 import ItemList from "../ItemList/ItemList";
 
 function ItemListContainer(props) {
@@ -89,7 +88,7 @@ function ItemListContainer(props) {
   function getProducts(product) {
     setIsLoading(true);
     setItems([]);
-    fetch("https://picsum.photos/v2/list?page="+product+"&limit=100")
+    fetch("https://fakestoreapi.com/products?limit=6")
       .then(async (response) => {
         const isJson = response.headers
           .get("content-type")

@@ -1,8 +1,10 @@
 import React from "react";
 import { Button, Image, Text } from "@mantine/core";
 import { StyledContainer } from "../ItemListContainer/ItemListContainer";
+import {  Navigate } from "react-router-dom";
 
 export default function Item(props) {
+
   return (
     <>
       <StyledContainer>
@@ -21,6 +23,7 @@ export default function Item(props) {
           
         }} variant="outline" color="purple" size="md">
           Ver detalles
+          
         </Button>
         </StyledContainer>
       </StyledContainer>
