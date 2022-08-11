@@ -1,8 +1,8 @@
 import React from "react";
-import { Image, Text } from "@mantine/core";
+import { Button, Image, Text } from "@mantine/core";
 import { StyledContainer } from "../ItemListContainer/ItemListContainer";
 
-export default function ItemShowCard(props) {
+export default function Item(props) {
   return (
     <>
       <StyledContainer>
@@ -17,6 +17,11 @@ export default function ItemShowCard(props) {
             <Text>
                 {props.productName}
             </Text>
+            <Button onClick={()=>{
+          
+        }} variant="outline" color="purple" size="md">
+          Ver detalles
+        </Button>
         </StyledContainer>
       </StyledContainer>
     </>

@@ -3,9 +3,9 @@ import { FaCat } from "react-icons/fa";
 import { RiEmotionSadFill, RiGameLine } from "react-icons/ri";
 import { GiPillow } from "react-icons/gi";
 import styled from "styled-components";
-import ItemShowCard from "../ItemShowCard/ItemShowCard";
 import { useState } from "react";
 import ItemSaleCard from "../ItemSaleCard/ItemSaleCard";
+import ItemList from "../ItemList/ItemList";
 
 function ItemListContainer(props) {
   const [items, setItems] = useState([]);
@@ -44,9 +44,7 @@ function ItemListContainer(props) {
             {isLoading ? (
                 <Loader/>
               ) : items.length > 0 ? (
-                items.map((item) => {
-                  return(<ItemSaleCard imgUrl={item.download_url} stock={item.width} productName={item.author}/>)
-                })
+                <ItemList items={items}></ItemList>
               ) :(
                 <Paper shadow="sm" p="xl" withBorder>
                   <RiEmotionSadFill size={props.iconsSize * 5} />
@@ -60,9 +58,7 @@ function ItemListContainer(props) {
             {isLoading ? (
                 <Loader/>
               ) : items.length > 0 ? (
-                items.map((item) => {
-                  return(<ItemShowCard imgUrl={item.download_url} productName={item.author}/>)
-                })
+                <ItemList items={items}></ItemList>
               ) :(
                 <Paper shadow="sm" p="xl" withBorder>
                   <RiEmotionSadFill size={props.iconsSize * 5} />
@@ -76,9 +72,7 @@ function ItemListContainer(props) {
             {isLoading ? (
                 <Loader/>
               ) : items.length > 0 ? (
-                items.map((item) => {
-                  return(<ItemShowCard imgUrl={item.download_url} productName={item.author}/>)
-                })
+                <ItemList items={items}></ItemList>
               ) :(
                 <Paper shadow="sm" p="xl" withBorder>
                   <RiEmotionSadFill size={props.iconsSize * 5} />
