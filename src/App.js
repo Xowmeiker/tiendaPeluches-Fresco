@@ -4,6 +4,7 @@ import { MantineProvider } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ItemSaleCard from "./components/ItemSaleCard/ItemSaleCard";
+import Index from "./components/Index/Index";
 
 function App() {
   return (
@@ -29,14 +30,27 @@ function App() {
         <Router>
           <NotificationsProvider>
             <NavBar />
-            <ItemListContainer
-              greeting="Bienvenido a la tienda"
-              iconsSize={14}
-            />
           </NotificationsProvider>
 
           <Routes>
-            <Route path="/product/:id" element={<ItemSaleCard />}></Route>
+            <Route
+              path="/"
+              element={
+                <Index
+                  greeting="Bienvenido a la tienda"
+                />
+              }
+            />
+            <Route
+              path="/category/:categoryId"
+              element={
+                <ItemListContainer
+                  greeting="Bienvenido a la tienda"
+                  iconsSize={14}
+                />
+              }
+            />
+            <Route path="/item/:id" element={<ItemSaleCard />} />
           </Routes>
         </Router>
       </MantineProvider>

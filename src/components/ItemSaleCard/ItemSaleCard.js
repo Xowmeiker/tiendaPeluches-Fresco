@@ -10,9 +10,10 @@ export default function ItemSaleCard(props) {
   const { id } = useParams();
   const [item, setItem] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const getProduct = (id)=>{
     setIsLoading(true);
-    setItem([]);
+    setItem({});
     fetch(`https://fakestoreapi.com/products/${id}`)
       .then(async (response) => {
         const isJson = response.headers
@@ -44,7 +45,7 @@ export default function ItemSaleCard(props) {
 
   useEffect(() => {
     getProduct(id);
-  },[]);
+  },[id]);
 
   return (
     <>
@@ -52,7 +53,7 @@ export default function ItemSaleCard(props) {
         <StyledContainer>
           {isLoading ? (
             <Loader />
-          ) : item.length > 0 ? (
+          ) : item ? (
             <>
               <Image
                 radius="md"

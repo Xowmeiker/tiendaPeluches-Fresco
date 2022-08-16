@@ -1,44 +1,22 @@
-import { Tabs, Text, Paper, Loader } from "@mantine/core";
-import { FaCat } from "react-icons/fa";
-import { RiEmotionSadFill, RiGameLine } from "react-icons/ri";
-import { GiPillow } from "react-icons/gi";
+import {  Text, Paper, Loader } from "@mantine/core";
+import { RiEmotionSadFill } from "react-icons/ri";
 import styled from "styled-components";
 import { useState } from "react";
 import ItemList from "../ItemList/ItemList";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 function ItemListContainer(props) {
+  const { categoryId } = useParams();
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(()=>{
+    getProducts(categoryId);
+  },[categoryId])
+
   return (
     <>
-      <p>{props.greeting}</p>
-      <Tabs color="purple" radius="xs" defaultValue="gallery">
-        <Tabs.List position="center">
-          <Tabs.Tab 
-          onClick={()=>getProducts(1)}
-          value="Animales" 
-          icon={<FaCat size={props.iconsSize} />}>
-            Animales
-          </Tabs.Tab>
-          <Tabs.Tab
-            onClick={()=>getProducts(2)}
-            value="Personajes"
-            icon={<RiGameLine size={props.iconsSize} />}
-          >
-            Personajes
-          </Tabs.Tab>
-          <Tabs.Tab
-            onClick={()=>getProducts(3)}
-            value="Almohadas"
-            icon={<GiPillow size={props.iconsSize} />}
-          >
-            Almohadas
-          </Tabs.Tab>
-        </Tabs.List>
-
-        <StyledContainer>
-          <Tabs.Panel value="Animales" pt="xs" >
             <StyledContainer>
             {isLoading ? (
                 <Loader/>
@@ -51,44 +29,13 @@ function ItemListContainer(props) {
                 </Paper>
               )}
             </StyledContainer>
-          </Tabs.Panel>
-          <Tabs.Panel value="Personajes" pt="xs">
-            <StyledContainer>
-            {isLoading ? (
-                <Loader/>
-              ) : items.length > 0 ? (
-                <ItemList items={items}></ItemList>
-              ) :(
-                <Paper shadow="sm" p="xl" withBorder>
-                  <RiEmotionSadFill size={props.iconsSize * 5} />
-                  <Text>Sorry, something went wrong</Text>
-                </Paper>
-              )}
-            </StyledContainer>
-          </Tabs.Panel>
-          <Tabs.Panel value="Almohadas" pt="xs">
-            <StyledContainer>
-            {isLoading ? (
-                <Loader/>
-              ) : items.length > 0 ? (
-                <ItemList items={items}></ItemList>
-              ) :(
-                <Paper shadow="sm" p="xl" withBorder>
-                  <RiEmotionSadFill size={props.iconsSize * 5} />
-                  <Text>Sorry, something went wrong</Text>
-                </Paper>
-              )}
-            </StyledContainer>
-          </Tabs.Panel>
-        </StyledContainer>
-      </Tabs>
     </>
   );
 
-  function getProducts(product) {
+  function getProducts(category) {
     setIsLoading(true);
     setItems([]);
-    fetch("https://fakestoreapi.com/products?limit=6")
+    fetch(`https://fakestoreapi.com/products/category/${category}?limit=3`)
       .then(async (response) => {
         const isJson = response.headers
           .get("content-type")

@@ -1,9 +1,10 @@
 import React from "react";
 import { Button, Image, Text } from "@mantine/core";
 import { StyledContainer } from "../ItemListContainer/ItemListContainer";
-import {  Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Item(props) {
+  let navigate = useNavigate();
 
   return (
     <>
@@ -20,7 +21,7 @@ export default function Item(props) {
                 {props.productName}
             </Text>
             <Button onClick={()=>{
-          
+          navigate(`/item/${props.id}`)
         }} variant="outline" color="purple" size="md">
           Ver detalles
           
