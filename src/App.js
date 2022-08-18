@@ -5,6 +5,7 @@ import { NotificationsProvider } from "@mantine/notifications";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ItemSaleCard from "./components/ItemSaleCard/ItemSaleCard";
 import Index from "./components/Index/Index";
+import Cart from "./components/Cart/Cart";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
               }
             />
             <Route path="/item/:id" element={<ItemSaleCard />} />
+            <Route path="/cart" element={<Cart />} />
           </Routes>
         </Router>
       </MantineProvider>

@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from "react";
 import ItemCount from "../ItemCount/ItemCount";
-import { CheckIcon, Image, Loader, Paper, Text } from "@mantine/core";
+import { Affix, Button, CheckIcon, Image, Loader, Paper, Text, Transition } from "@mantine/core";
 import { StyledContainer } from "../ItemListContainer/ItemListContainer";
 import { showNotification } from "@mantine/notifications";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { RiEmotionSadFill } from "react-icons/ri";
+import { IconArrowUp } from "@tabler/icons";
+import { useWindowScroll } from "@mantine/hooks";
 
 export default function ItemSaleCard(props) {
   const { id } = useParams();
   const [item, setItem] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [scroll, scrollTo] = useWindowScroll();
+  let navigate = useNavigate();
+
+  const cart = {
+    products:[]
+  }
 
   const getProduct = (id)=>{
     setIsLoading(true);
@@ -34,7 +42,8 @@ export default function ItemSaleCard(props) {
       });
   }
 
-  const addToCart = (quantity) => {
+  const addToCart = (quantity,id) => {
+    cart.products.push(id);
     showNotification({
       message: `Se agregaron al carrito ${quantity} productos`,
       title: "Agregado al carrito",
@@ -64,7 +73,7 @@ export default function ItemSaleCard(props) {
               <Text>{item.title}</Text>
               <Text>{item.price}</Text>
               <Text>{item.description}</Text>
-              <ItemCount stock={5} initial={0} onAdd={addToCart} />
+              <ItemCount stock={5} initial={0} onAdd={addToCart} id={id} />
             </>
           ) : (
             <Paper shadow="sm" p="xl" withBorder>
@@ -74,6 +83,22 @@ export default function ItemSaleCard(props) {
           )}
         </StyledContainer>
       </StyledContainer>
+      <Affix position={{ bottom: 20, right: 20 }}>
+        <Transition transition="slide-up" mounted={scroll.y > 0}>
+          {(transitionStyles) => (
+            <Button
+              leftIcon={<IconArrowUp size={16} />}
+              style={transitionStyles}
+              onClick={() => {
+                scrollTo({ y: 0 })
+                setTimeout(navigate(`/cart`),6000)
+              }}
+            >
+              Finalizar compra
+            </Button>
+          )}
+        </Transition>
+      </Affix>
     </>
   );
 }
