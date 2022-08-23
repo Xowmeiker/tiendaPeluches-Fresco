@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ItemSaleCard from "./components/ItemSaleCard/ItemSaleCard";
 import Index from "./components/Index/Index";
 import Cart from "./components/Cart/Cart";
+import CustomProvider from "./components/CustomProvider/CustomProvider";
 
 function App() {
   return (
@@ -30,17 +31,15 @@ function App() {
       >
         <Router>
           <NotificationsProvider>
-            <NavBar />
+            <CustomProvider>
+              <NavBar />
+            </CustomProvider>
           </NotificationsProvider>
 
           <Routes>
             <Route
               path="/"
-              element={
-                <Index
-                  greeting="Bienvenido a la tienda"
-                />
-              }
+              element={<Index greeting="Bienvenido a la tienda" />}
             />
             <Route
               path="/category/:categoryId"

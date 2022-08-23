@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, NumberInput } from "@mantine/core";
 import { StyledContainer } from "../ItemListContainer/ItemListContainer";
+import { context } from "../CustomProvider/CustomProvider";
 
-export default function ItemCount({stock,initial,onAdd,id}) {
+export default function ItemCount({stock,initial,onAdd,product}) {
   const [value,setValue] = useState(0)
   const [disabled,setDisabled] = useState(true)
 
@@ -29,7 +30,7 @@ export default function ItemCount({stock,initial,onAdd,id}) {
         />
         <Button onClick={()=>{
           if(stock>0)
-            onAdd(value,id)
+            onAdd(value,product)
         }} variant="outline" color="purple" size="md" disabled={disabled}>
           Agregar al carrito
         </Button>

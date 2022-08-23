@@ -8,16 +8,42 @@ import { RiEmotionSadFill } from "react-icons/ri";
 import { IconArrowUp } from "@tabler/icons";
 import { useWindowScroll } from "@mantine/hooks";
 
+class Producto {
+
+  constructor( image, title, price, description, stock){
+      this.image = image;
+      this.title = title;
+      this.price = price;
+      this.description = description;
+      this.stock = stock;
+      this.quantity = 1;
+    }
+
+   get image(){
+    return this.image;
+   }
+   get title(){
+    return this.title;
+   }
+   get price(){
+    return this.price;
+   }
+   get description(){
+    return this.description;
+   }
+   get stock(){
+    return this.stock;
+   }
+}
+
 export default function ItemSaleCard(props) {
   const { id } = useParams();
   const [item, setItem] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [scroll, scrollTo] = useWindowScroll();
   let navigate = useNavigate();
-
-  const cart = {
-    products:[]
-  }
+  const {addProduct} = useContext(context)
+  let product;
 
   const getProduct = (id)=>{
     setIsLoading(true);
@@ -34,7 +60,14 @@ export default function ItemSaleCard(props) {
           return Promise.reject(error);
         }
         setIsLoading(false);
-        setItem(data);
+        product = new Producto(
+          data.image,
+          data.title,
+          data.price,
+          data.descripcion,
+          data.stock
+          );
+        
         console.log(data);
       })
       .catch(function (error) {
@@ -42,8 +75,8 @@ export default function ItemSaleCard(props) {
       });
   }
 
-  const addToCart = (quantity,id) => {
-    cart.products.push(id);
+  const addToCart = (quantity,product) => {
+    addProduct(product)
     showNotification({
       message: `Se agregaron al carrito ${quantity} productos`,
       title: "Agregado al carrito",
@@ -73,7 +106,7 @@ export default function ItemSaleCard(props) {
               <Text>{item.title}</Text>
               <Text>{item.price}</Text>
               <Text>{item.description}</Text>
-              <ItemCount stock={5} initial={0} onAdd={addToCart} id={id} />
+              <ItemCount initial={0} onAdd={addToCart} product={product} />
             </>
           ) : (
             <Paper shadow="sm" p="xl" withBorder>
