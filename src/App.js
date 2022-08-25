@@ -3,14 +3,15 @@ import NavBar from "./components/NavBar/NavBar";
 import { MantineProvider } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ItemSaleCard from "./components/ItemSaleCard/ItemSaleCard";
 import Index from "./components/Index/Index";
 import Cart from "./components/Cart/Cart";
 import CustomProvider from "./components/CustomProvider/CustomProvider";
+import ItemDetailsContainer from "./components/ItemDetailsContainer/ItemDetailsContainer";
 
 function App() {
   return (
     <>
+    <CustomProvider>
       <MantineProvider
         theme={{
           colors: {
@@ -31,9 +32,9 @@ function App() {
       >
         <Router>
           <NotificationsProvider>
-            <CustomProvider>
+            
               <NavBar />
-            </CustomProvider>
+            
           </NotificationsProvider>
 
           <Routes>
@@ -50,11 +51,12 @@ function App() {
                 />
               }
             />
-            <Route path="/item/:id" element={<ItemSaleCard />} />
+            <Route path="/item/:id" element={<ItemDetailsContainer />} />
             <Route path="/cart" element={<Cart />} />
           </Routes>
         </Router>
       </MantineProvider>
+      </CustomProvider>
     </>
   );
 }

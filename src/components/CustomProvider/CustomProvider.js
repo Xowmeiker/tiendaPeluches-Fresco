@@ -1,10 +1,12 @@
 import React from 'react'
+import { useState } from 'react';
 import { createContext } from 'react'
 
-export const context = createContext();
+export const context = createContext({});
 const {Provider} = context;
 
 export default function CustomProvider(props) {
+    const [product,setProduct] = useState({});
 
     const addProduct = (product)=>{
 
@@ -41,7 +43,9 @@ export default function CustomProvider(props) {
         addProduct,
         deleteProduct,
         emptyCart,
-        isInCart
+        isInCart,
+        Product:[product,
+            setProduct]
     }
 
   return (
