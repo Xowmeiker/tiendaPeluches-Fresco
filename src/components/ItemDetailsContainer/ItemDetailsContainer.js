@@ -4,6 +4,8 @@ import ItemDetailsCard from "../ItemDetailsCard/ItemDetailsCard";
 import { Loader } from "@mantine/core";
 import { useContext } from "react";
 import { context } from "../CustomProvider/CustomProvider";
+import { doc, getDoc } from "firebase/firestore";
+import db from "../Firebase/Firebase";
 
 export default function ItemDetailsContainer() {
   const { id } = useParams();
@@ -13,31 +15,17 @@ export default function ItemDetailsContainer() {
 
   const getProduct = (id) => {
     setIsLoading(true);
-    fetch(`https://fakestoreapi.com/products/${id}`)
-      .then(async (response) => {
-        const isJson = response.headers
-          .get("content-type")
-          ?.includes("application/json");
-        const data = isJson ? await response.json() : null;
 
-        if (!response.ok || !isJson) {
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
-        }
-        setIsLoading(false);
-        setProductValue(createProduct(
-          id,
-          data.image,
-          data.title,
-          data.price,
-          data.descripcion,
-          data.stock
-        ));
-
-      })
-      .catch(function (error) {
-        console.log("Hubo un problema con la petición Fetch:" + error.message);
-      });
+    const docRef = doc(db, "products", id);
+    const consulta = getDoc(docRef);
+    consulta
+    .then(snapshot=>{
+      setProductValue({id:snapshot.id,...snapshot.data()})
+      setIsLoading(false)
+    })
+    .catch(err=>{
+      console.log(err);
+    })
   };
 
   const createProduct = (id,image, title, price, descripcion, stock) => {

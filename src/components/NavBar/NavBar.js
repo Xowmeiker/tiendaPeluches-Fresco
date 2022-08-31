@@ -26,11 +26,11 @@ function NavBar() {
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Item onClick={()=>navigate("/category/jewelery")} icon={<FaCat size={iconSize} />}>Animales</Menu.Item>
-            <Menu.Item onClick={()=>navigate("/category/electronics")} icon={<RiGameLine size={iconSize} />}>
+            <Menu.Item onClick={()=>navigate("/category/animal")} icon={<FaCat size={iconSize} />}>Animales</Menu.Item>
+            <Menu.Item onClick={()=>navigate("/category/character")} icon={<RiGameLine size={iconSize} />}>
               Personajes
             </Menu.Item>
-            <Menu.Item onClick={()=>navigate("/category/men's clothing")} icon={<GiPillow size={iconSize} />}>Almohadas</Menu.Item>
+            <Menu.Item onClick={()=>navigate("/category/pillow")} icon={<GiPillow size={iconSize} />}>Almohadas</Menu.Item>
           </Menu.Dropdown>
         </Menu>
       </Wrapper>

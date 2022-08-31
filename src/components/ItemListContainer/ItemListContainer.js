@@ -1,60 +1,65 @@
-import {  Text, Paper, Loader } from "@mantine/core";
+import { Text, Paper, Loader } from "@mantine/core";
 import { RiEmotionSadFill } from "react-icons/ri";
 import styled from "styled-components";
 import { useState } from "react";
 import ItemList from "../ItemList/ItemList";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import {query, collection, where, getDocs, getFirestore} from "firebase/firestore"
+import db from "../Firebase/Firebase";
 
 function ItemListContainer(props) {
   const { categoryId } = useParams();
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(()=>{
+  
+  useEffect(() => {
     getProducts(categoryId);
-  },[categoryId])
+  }, [categoryId]);
 
   return (
     <>
-            <StyledContainer>
-            {isLoading ? (
-                <Loader/>
-              ) : items.length > 0 ? (
-                <ItemList items={items}></ItemList>
-              ) :(
-                <Paper shadow="sm" p="xl" withBorder>
-                  <RiEmotionSadFill size={props.iconsSize * 5} />
-                  <Text>Sorry, something went wrong</Text>
-                </Paper>
-              )}
-            </StyledContainer>
+      <StyledContainer>
+        {isLoading ? (
+          <Loader />
+        ) : items.length > 0 ? (
+          <ItemList items={items}></ItemList>
+        ) : (
+          <Paper shadow="sm" p="xl" withBorder>
+            <RiEmotionSadFill size={props.iconsSize * 5} />
+            <Text>Sorry, something went wrong</Text>
+          </Paper>
+        )}
+      </StyledContainer>
     </>
   );
 
-  function getProducts(category) {
+  async function getProducts(category) {
     setIsLoading(true);
     setItems([]);
-    fetch(`https://fakestoreapi.com/products/category/${category}?limit=3`)
-      .then(async (response) => {
-        const isJson = response.headers
-          .get("content-type")
-          ?.includes("application/json");
-        const data = isJson ? await response.json() : null;
 
-        if (!response.ok || !isJson) {
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
+    const productsCollection = collection(db, "products")
+    const consulta = getDocs(productsCollection)
+
+    consulta
+    .then(snapshot=>{
+      const allProducts = snapshot.docs.map(doc=>{
+        
+        return{
+          ...doc.data(),
+          id: doc.id
         }
-        setIsLoading(false);
-        setItems(data);
-        console.log(data)
-      })
-      .catch(function (error) {
-        console.log("Hubo un problema con la petición Fetch:" + error.message);
-      });
+      }).filter(p=>p.category == category);
+      setItems(allProducts)
+      setIsLoading(false)
+    })
+    .catch(err=>{
+      console.log(err);
+    })
   }
 }
+
 
 export const StyledContainer = styled.div`
   display: flex;

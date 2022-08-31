@@ -4,6 +4,8 @@ import React from "react";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getDatabase } from "firebase/database";
+const {Product} = useContext(context);
+
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -25,8 +27,14 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const database = getDatabase(app);
 
-export default function FirebaseProvider(props) {
-  return <>
-  {props.children}
- </>;
-}
+function useFirebase() {
+    const context = React.useContext(FirebaseAuthContext);
+    if (context === undefined) {
+      throw new Error(
+        "useFirebaseAuth must be used within a FirebaseAuthProvider"
+      );
+    }
+    return context.user;
+  }
+  
+  export { useFirebase };

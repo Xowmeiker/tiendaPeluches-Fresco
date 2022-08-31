@@ -6,6 +6,7 @@ export const context = createContext({});
 const { Provider } = context;
 
 export default function CustomProvider(props) {
+    
   const [product, setProduct] = useState({});
 
   const addProduct = (product) => {
@@ -20,7 +21,7 @@ export default function CustomProvider(props) {
     if (isInCart(product.id) && quantityInCartOf(product.id) > 1) {
       changeQuantityOf(product.id, 1);
     } else {
-        remove(contextValue.cart,indexInCartOf(product.id));
+      remove(contextValue.cart, indexInCartOf(product.id));
     }
   };
 
@@ -47,10 +48,7 @@ export default function CustomProvider(props) {
   };
 
   const remove = (cart, index) => {
-    return [
-      ...cart.slice(0, index),
-      ...cart.slice(index + 1),
-    ];
+    return [...cart.slice(0, index), ...cart.slice(index + 1)];
   };
 
   const contextValue = {
