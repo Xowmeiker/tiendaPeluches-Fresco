@@ -1,15 +1,15 @@
 import React from "react";
 import { Button, Image, Text } from "@mantine/core";
-import { StyledContainer } from "../ItemListContainer/ItemListContainer";
 import { useNavigate } from "react-router-dom";
+import styles from "./Item.module.scss"
+import "../commonStyles/_styles.scss"
 
 export default function Item(props) {
   let navigate = useNavigate();
 
   return (
     <>
-      <StyledContainer>
-        <StyledContainer>
+        <div className="containerColumn">
             <Image
               radius="md"
               width="30vw"
@@ -26,8 +26,7 @@ export default function Item(props) {
           Ver detalles
           
         </Button>
-        </StyledContainer>
-      </StyledContainer>
+        </div>
     </>
   );
 }

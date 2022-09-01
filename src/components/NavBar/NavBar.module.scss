@@ -1,0 +1,28 @@
+@use "../commonStyles/_styles.scss" as styles;
+
+.wrapper{
+  @include styles.container;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  background-color: styles.$primaryColor;
+  border-bottom: 4px solid;
+}
+
+/* .wrapper2{
+  @include styles.container($direction:row);
+  align-items: center;
+  color: black;
+  background-color: styles.$primaryColor;
+  border-bottom: 4px solid;
+} */
+
+.headerElement{
+    padding: 0% 10%;
+}
+
+.brandName{
+    color: black;
+    font-size: 4vw;
+    cursor: pointer;
+}

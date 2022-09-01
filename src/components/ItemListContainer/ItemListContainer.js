@@ -1,26 +1,31 @@
 import { Text, Paper, Loader } from "@mantine/core";
 import { RiEmotionSadFill } from "react-icons/ri";
-import styled from "styled-components";
 import { useState } from "react";
 import ItemList from "../ItemList/ItemList";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import {query, collection, where, getDocs, getFirestore} from "firebase/firestore"
+import {
+  query,
+  collection,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import db from "../Firebase/Firebase";
+import "../commonStyles/_styles.scss"
+import styles from "../ItemListContainer/ItemListContainer.module.scss"
+
 
 function ItemListContainer(props) {
   const { categoryId } = useParams();
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  
   useEffect(() => {
     getProducts(categoryId);
   }, [categoryId]);
 
   return (
-    <>
-      <StyledContainer>
+      <div className={`containerColumn ${styles.fullVerticalSize}`}>
         {isLoading ? (
           <Loader />
         ) : items.length > 0 ? (
@@ -31,47 +36,37 @@ function ItemListContainer(props) {
             <Text>Sorry, something went wrong</Text>
           </Paper>
         )}
-      </StyledContainer>
-    </>
+      </div>
   );
 
   async function getProducts(category) {
     setIsLoading(true);
     setItems([]);
 
-    const productsCollection = collection(db, "products")
-    const consulta = getDocs(productsCollection)
+    const productsCollection = collection(db, "products");
+    let q = null;
 
-    consulta
-    .then(snapshot=>{
-      const allProducts = snapshot.docs.map(doc=>{
-        
-        return{
-          ...doc.data(),
-          id: doc.id
-        }
-      }).filter(p=>p.category == category);
-      setItems(allProducts)
-      setIsLoading(false)
-    })
-    .catch(err=>{
-      console.log(err);
-    })
+    if(typeof category !== 'undefined' ){
+     q = query(productsCollection, where("category", "==", category));
+    }else{
+     q = query(productsCollection);
+    }
+    const querySnapshot = await getDocs(q)
+      .then((snapshot) => {
+        const allProducts = snapshot.docs
+          .map((doc) => {
+            return {
+              ...doc.data(),
+              id: doc.id,
+            };
+          })
+        setItems(allProducts);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
-
-
-export const StyledContainer = styled.div`
-  display: flex;
-  min-width: 100%;
-  justify-content: center;
-  align-items: center;
-  /* padding: 10%; */
-  flex-direction: ${(props) => (props.dRow ? "row" : "column")};
-  text-overflow: none;
-  > * {
-    margin: 2%;
-  }
-`;
 
 export default ItemListContainer;

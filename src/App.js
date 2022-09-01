@@ -7,6 +7,7 @@ import Index from "./components/Index/Index";
 import Cart from "./components/Cart/Cart";
 import CustomProvider from "./components/CustomProvider/CustomProvider";
 import ItemDetailsContainer from "./components/ItemDetailsContainer/ItemDetailsContainer";
+import CheckoutForm from "./components/CheckoutForm/CheckoutForm";
 
 function App() {
   return (
@@ -40,19 +41,21 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<Index greeting="Bienvenido a la tienda" />}
+              element={<ItemListContainer
+                iconsSize={14}
+              />}
             />
             <Route
               path="/category/:categoryId"
               element={
                 <ItemListContainer
-                  greeting="Bienvenido a la tienda"
                   iconsSize={14}
                 />
               }
             />
             <Route path="/item/:id" element={<ItemDetailsContainer />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<CheckoutForm />} />
           </Routes>
         </Router>
       </MantineProvider>

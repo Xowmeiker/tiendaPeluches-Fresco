@@ -6,6 +6,7 @@
     "@emotion/react": "^11.9.3",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mantine/core": "^5.0.0",
+    "@mantine/form": "^5.2.4",
     "@mantine/hooks": "^5.0.0",
     "@mantine/notifications": "^5.0.2",
     "@tabler/icons": "^1.78.1",
@@ -18,7 +19,7 @@
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
-    "styled-components": "^5.3.5",
+    "sass": "^1.54.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

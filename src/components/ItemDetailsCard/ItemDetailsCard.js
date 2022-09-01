@@ -9,22 +9,23 @@ import {
   Text,
   Transition,
 } from "@mantine/core";
-import { StyledContainer } from "../ItemListContainer/ItemListContainer";
 import { showNotification } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";
 import { RiEmotionSadFill } from "react-icons/ri";
 import { IconArrowUp } from "@tabler/icons";
 import { useWindowScroll } from "@mantine/hooks";
 import { context } from "../CustomProvider/CustomProvider";
+import "../commonStyles/_styles.scss"
+
 
 export default function ItemDetailsCard(props) {
   const [scroll, scrollTo] = useWindowScroll();
   let navigate = useNavigate();
-  const { addProduct,Product} = useContext(context);
+  const { addProduct,Product,dolarPrice} = useContext(context);
   const [product,setProduct] = Product;
   
-  const addToCart = (quantity, product) => {
-    addProduct(product);
+  const addToCart = (product,quantity) => {
+    addProduct(product,quantity);
     showNotification({
       message: `Se agregaron al carrito ${quantity} productos`,
       title: "Agregado al carrito",
@@ -35,8 +36,8 @@ export default function ItemDetailsCard(props) {
 
   return (
     <>
-      <StyledContainer dRow>
-        <StyledContainer>
+      <div className="containerColumn">
+        <div className="containerColumn">
            {product ? (
             <>
               <Image
@@ -46,9 +47,9 @@ export default function ItemDetailsCard(props) {
                 alt="Random unsplash image"
               />
               <Text>{product.title}</Text>
-              <Text>precio: {product.price}</Text>
+              <Text>precio:  ${product.price*dolarPrice}</Text>
               <Text>{product.description}</Text>
-              <ItemCount initial={0} stock={5} onAdd={addToCart} />
+              <ItemCount stock={product.stock} onAdd={addToCart} />
             </>
           ) : (
             <Paper shadow="sm" p="xl" withBorder>
@@ -56,8 +57,8 @@ export default function ItemDetailsCard(props) {
               <Text>Sorry, something went wrong</Text>
             </Paper>
           )}
-        </StyledContainer>
-      </StyledContainer>
+        </div>
+      </div>
       <Affix position={{ bottom: 20, right: 20 }}>
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
