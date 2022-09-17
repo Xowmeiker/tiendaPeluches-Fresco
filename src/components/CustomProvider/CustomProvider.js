@@ -17,8 +17,8 @@ export default function CustomProvider(props) {
   .then(response => response.json())
   .then(data => setDolarPrice(data.blue.value_avg));
 
-  const createOrder = (orderDetails) => {
-    addDoc(collection(db, "orders"), {
+  const createOrder = async (orderDetails) => {
+    const docRef = await addDoc(collection(db, "orders"), {
       buyer:{
         fullName:orderDetails.name+" "+orderDetails.lastName,
         phone:orderDetails.phoneNumber,
@@ -28,7 +28,9 @@ export default function CustomProvider(props) {
       items:[...cart],
       date:new Date().toISOString(),
       total:getTotalof(cart)
-    });
+    })
+      console.log(docRef.id);
+    return docRef.id;
   }
 
   const addProduct = (product,quantity) => {
@@ -46,7 +48,7 @@ export default function CustomProvider(props) {
     };
 
   const emptyCart = () => {
-    setCart = [];
+    setCart([]);
   };
 
   const isInCart = (id) => {
@@ -81,6 +83,10 @@ export default function CustomProvider(props) {
     return total;
   };
 
+  const getTotalofElementsIn = () => {
+    return cart.reduce((acc, item) => acc += item.quantity, 0)
+  };
+
   const contextValue = {
     Cart: [cart,setCart],
     addProduct,
@@ -89,7 +95,8 @@ export default function CustomProvider(props) {
     isInCart,
     Product: [product, setProduct],
     dolarPrice,
-    createOrder
+    createOrder,
+    getTotalofElementsIn
   };
 
   return <Provider value={contextValue}>{props.children}</Provider>;

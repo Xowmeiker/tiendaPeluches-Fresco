@@ -10,9 +10,34 @@ import {
 import { useForm } from "@mantine/form";
 import { useContext } from "react";
 import { context } from "../CustomProvider/CustomProvider";
+import { showNotification } from "@mantine/notifications";
+import { IconCheck } from "@tabler/icons";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutForm() {
-  const { createOrder } = useContext(context);
+  const { createOrder,emptyCart } = useContext(context);
+  let navigate = useNavigate();
+
+  const checkOutRoutine = async (values)=>{
+
+    let id = await createOrder(values);
+
+    navigate('/')
+
+    showNotification({
+      message: `Su orden ${id} fue creada con exito`,
+      title: "Orden creada",
+      color:'green',
+      autoClose:false,
+      icon: <IconCheck
+      size={25}
+      strokeWidth={2}
+      color= {'white'}
+    />,
+    });
+
+    emptyCart()
+  }
 
   const form = useForm({
     initialValues: {
@@ -34,7 +59,7 @@ export default function CheckoutForm() {
 
   return (
     <Box sx={{ maxWidth: 300 }} mx="auto">
-      <form onSubmit={form.onSubmit((values) => {createOrder(values)})}>
+      <form onSubmit={form.onSubmit((values) => {checkOutRoutine(values)})}>
         <TextInput
           label="Nombre"
           placeholder="Juan"

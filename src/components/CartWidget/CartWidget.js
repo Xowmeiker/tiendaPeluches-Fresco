@@ -5,15 +5,13 @@ import { useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 
 export const CartWidget = (props) => {
-    const {Cart} = useContext(context)
+    const {getTotalofElementsIn} = useContext(context)
     const navigate = useNavigate()
-
-    const [cart,setCart] = Cart;
       
     return (
         <IconContext.Provider value={{ size: props.size?props.size:30 }}>
         <AiOutlineShoppingCart onClick={()=>{navigate(`/cart`)}}></AiOutlineShoppingCart>
-        {cart.length}
+        {getTotalofElementsIn()}
         </IconContext.Provider>
         )
 }

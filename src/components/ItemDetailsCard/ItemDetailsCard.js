@@ -3,7 +3,6 @@ import ItemCount from "../ItemCount/ItemCount";
 import {
   Affix,
   Button,
-  CheckIcon,
   Image,
   Paper,
   Text,
@@ -12,7 +11,7 @@ import {
 import { showNotification } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";
 import { RiEmotionSadFill } from "react-icons/ri";
-import { IconArrowUp } from "@tabler/icons";
+import { IconArrowUp, IconShoppingCartPlus } from "@tabler/icons";
 import { useWindowScroll } from "@mantine/hooks";
 import { context } from "../CustomProvider/CustomProvider";
 import "../commonStyles/_styles.scss"
@@ -29,8 +28,13 @@ export default function ItemDetailsCard(props) {
     showNotification({
       message: `Se agregaron al carrito ${quantity} productos`,
       title: "Agregado al carrito",
-      color: "purple",
-      icon: <CheckIcon />,
+      color:'green',
+      autoClose:2500,
+      icon: <IconShoppingCartPlus
+      size={25}
+      strokeWidth={2}
+      color= {'white'}
+    />,
     });
   };
 
