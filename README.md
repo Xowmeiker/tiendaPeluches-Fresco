@@ -10,7 +10,7 @@ The user can browse throught different categories and add/delete products from t
 He can choose to buy everything on the cart placing an order with its personal details and
 all data is saved into a Firebase Firestore Database which gives the user its orderId.
 
-![alt text](https://github.com/Xowmeiker/tiendaPeluches-Fresco/blob/main/animation.gif)
+![alt text](https://github.com/Xowmeiker/tiendaPeluches-Fresco/blob/main/Animation.gif)
 
 ## Tech Stack
 
